@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "mqtt_logger", "mqtt_logger.vgdbcmake", "{EA62F38A-BD53-42FE-ABA5-331DB9F61622}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|VisualGDB = Debug|VisualGDB
+		MinSizeRel|VisualGDB = MinSizeRel|VisualGDB
+		Release|VisualGDB = Release|VisualGDB
+		RelWithDebInfo|VisualGDB = RelWithDebInfo|VisualGDB
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA62F38A-BD53-42FE-ABA5-331DB9F61622}.Debug|VisualGDB.ActiveCfg = Debug|VisualGDB
+		{EA62F38A-BD53-42FE-ABA5-331DB9F61622}.Debug|VisualGDB.Build.0 = Debug|VisualGDB
+		{EA62F38A-BD53-42FE-ABA5-331DB9F61622}.MinSizeRel|VisualGDB.ActiveCfg = MinSizeRel|VisualGDB
+		{EA62F38A-BD53-42FE-ABA5-331DB9F61622}.MinSizeRel|VisualGDB.Build.0 = MinSizeRel|VisualGDB
+		{EA62F38A-BD53-42FE-ABA5-331DB9F61622}.Release|VisualGDB.ActiveCfg = Release|VisualGDB
+		{EA62F38A-BD53-42FE-ABA5-331DB9F61622}.Release|VisualGDB.Build.0 = Release|VisualGDB
+		{EA62F38A-BD53-42FE-ABA5-331DB9F61622}.RelWithDebInfo|VisualGDB.ActiveCfg = RelWithDebInfo|VisualGDB
+		{EA62F38A-BD53-42FE-ABA5-331DB9F61622}.RelWithDebInfo|VisualGDB.Build.0 = RelWithDebInfo|VisualGDB
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A78A738-42CA-450F-B652-5D8F87B065D2}
+	EndGlobalSection
+EndGlobal
