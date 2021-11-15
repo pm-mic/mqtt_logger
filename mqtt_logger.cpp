@@ -3,16 +3,12 @@
 
 // program files
 #include "mqtt_logger_constants.h"
-#include "mqtt_logger_settings.h"
-
-Settings load_config(std::string filename);
+#include "mqtt_logger_config.h"
 
 int main(int argc, char *argv[])
 {
     // open config file
-    Settings program_settings;
     
-    program_settings = load_config(Constants::config_filename);
     
     // open or create database
     
@@ -28,15 +24,4 @@ int main(int argc, char *argv[])
     while( 1 ) ;
     
 	return 0;
-}
-
-Settings load_config(std::string filename)
-{
-
-    
-    Settings return_value;
-    
-    
-    
-    return return_value;
 }

@@ -4,6 +4,6 @@
 cmake_minimum_required(VERSION 2.7)
 project(mqtt_logger)
 set(LIBRARIES_FROM_REFERENCES "")
-add_executable(mqtt_logger mqtt_logger.cpp mqtt_logger_constants.h mqtt_logger_settings.h config_base.h config_base.cpp mqtt_logger_config.h config_base.cpp mqtt_logger_config.cpp config_base.h mqtt_logger_config.h mqtt_logger_constants.h mqtt_logger_settings.h)
+add_executable(mqtt_logger mqtt_logger.cpp mqtt_logger_constants.h mqtt_logger_config.cpp mqtt_logger_config.h mqtt_logger_constants.h)
 target_link_libraries(mqtt_logger "${LIBRARIES_FROM_REFERENCES}")
 set_property(TARGET mqtt_logger PROPERTY CXX_STANDARD 17)
