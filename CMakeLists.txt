@@ -3,8 +3,8 @@
 
 cmake_minimum_required(VERSION 2.7)
 project(mqtt_logger)
-set(LIBRARIES_FROM_REFERENCES "config++" -lsqlite3 "paho-mqttpp3")
-add_executable(mqtt_logger mqtt_logger.cpp mqtt_logger_constants.h mqtt_logger_config.cpp mqtt_logger_config.h mqtt_logger_constants.h mqtt_database.h mqtt_database.h mqtt_message.h mqtt_database.cpp mqtt_handler.h mqtt_handler.cpp mqtt_handler.cpp mqtt_handler.h mqtt_handler_action_listener.h mqtt_handler_action_listener.cpp)
+set(LIBRARIES_FROM_REFERENCES -lconfig++ -lsqlite3 -lpaho-mqttpp3 -lpaho-mqtt3as)
+add_executable(mqtt_logger mqtt_logger.cpp mqtt_logger_constants.h mqtt_logger_config.cpp mqtt_logger_config.h mqtt_logger_constants.h mqtt_database.h mqtt_database.h mqtt_message.h mqtt_database.cpp mqtt_handler.h mqtt_handler.cpp mqtt_handler.cpp mqtt_handler.h mqtt_handler_action_listener.h mqtt_handler_action_listener.cpp Imqtt_subscribe_callback.h)
 target_include_directories(mqtt_logger PRIVATE)
 target_include_directories(mqtt_logger PUBLIC)
 target_link_libraries(mqtt_logger "${LIBRARIES_FROM_REFERENCES}")

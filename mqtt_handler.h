@@ -5,9 +5,7 @@
 #include "mqtt/async_client.h"
 #include "mqtt_message.h"
 #include "mqtt_handler_action_listener.h"
-
-// signature for callback functions of received messages
-typedef void(*mqtt_cb_t)(mqtt_message &message);
+#include "Imqtt_subscribe_callback.h"
 
 class mqtt_handler : 
     public virtual mqtt::callback, 
@@ -16,17 +14,19 @@ class mqtt_handler :
 public: 
     mqtt_handler(std::string broker_ip, std::string id, int port = 1883);
 
-    void subscribe(std::string topic, mqtt_cb_t function);        
+    void subscribe(std::string topic, Imqtt_subscribe_callback *callback_class);        
 private:
     std::unique_ptr<mqtt::async_client> _client;
     std::unique_ptr<mqtt::connect_options> _options;   
     
-    std::map<std::string, mqtt_cb_t> _subscribed_topics;
+    int _qos = 1;
+    std::map<std::string, Imqtt_subscribe_callback*> _subscribed_topics;
+    // An action listener to display the result of actions.
+    mqtt_handler_action_listener _subListener;
     
     // performed amount of retries
     int _retries = 0;
-    // An action listener to display the result of actions.
-    mqtt_handler_action_listener _subListener;
+    const int _max_retries = 5;
     
     void reconnect(void);
     void on_failure(const mqtt::token& tok) override;

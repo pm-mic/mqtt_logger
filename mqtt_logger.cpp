@@ -1,11 +1,11 @@
 // libraries
 #include <iostream>
-#include "mqtt/async_client.h"
 
 // program files
 #include "mqtt_logger_constants.h"
 #include "mqtt_logger_config.h"
 #include "mqtt_database.h"
+#include "mqtt_handler.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,15 +14,19 @@ int main(int argc, char *argv[])
     
     auto broker_ip = config.get_broker_ip();
     auto topics = config.get_topics();
+    auto id = config.get_id();
     
     // open or create database
     mqtt_database db = mqtt_database(Constants::database_filename);
     
     // make mqtt connections
-    
+    mqtt_handler handler(broker_ip, id);
     
     // subscribe to topics
-    
+    for( auto const &topic : topics )
+    {
+        handler.subscribe(topic, &db);
+    }
     
     // do logging
     

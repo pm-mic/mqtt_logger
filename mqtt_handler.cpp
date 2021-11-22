@@ -1,6 +1,7 @@
 #include "mqtt_handler.h" 
 
-mqtt_handler::mqtt_handler(std::string broker_ip, std::string id, int port)
+mqtt_handler::mqtt_handler(std::string broker_ip, std::string id, int port) :
+    _subListener("subscription")
 {
     // create client
     const std::string full_ip = "tcp://" + broker_ip + ":" + std::to_string(port);
@@ -9,19 +10,31 @@ mqtt_handler::mqtt_handler(std::string broker_ip, std::string id, int port)
     // define options
     this->_options = std::make_unique<mqtt::connect_options>();
     
-    // create callback class
+    // set callback
+    this->_client->set_callback(*this);
     
+    // connect
+    try
+    {
+        this->_client->connect(*this->_options, nullptr, *this);
+    }
+    // to be improved
+    catch( const mqtt::exception& exc )
+    {
+        std::cerr << "Error: " << exc.what() << std::endl;
+        throw std::runtime_error(exc.what());
+    }
 }
 
-void mqtt_handler::subscribe(std::string topic, mqtt_cb_t function)
+void mqtt_handler::subscribe(std::string topic, Imqtt_subscribe_callback *callback_class)
 {    
     // if client is connected already, take care of subscription
     if( this->_client->is_connected() )
     {
-        this->_client->subscribe()
+        this->_client->subscribe(topic, this->_qos, nullptr, this->_subListener);
     }
     
-    this->_subscribed_topics.insert({topic, function});
+    this->_subscribed_topics.insert({topic, callback_class});
 }
 
 
@@ -30,7 +43,7 @@ void mqtt_handler::reconnect()
     std::this_thread::sleep_for(std::chrono::milliseconds(2500));
     try
     {
-        this->_client.connect(this->_connect_options, nullptr, *this);
+        this->_client->connect(*this->_options, nullptr, *this);
     }
     catch( const mqtt::exception& exc)
     {
@@ -41,10 +54,12 @@ void mqtt_handler::reconnect()
 
 // Re-connection failure
 void mqtt_handler::on_failure(const mqtt::token& tok)
-{
+{   
     std::cout << "Connection attempt failed" << std::endl;
-    if( ++this->_retries > N_RETRY_ATTEMPTS )
+    
+    if( ++this->_retries > this->_max_retries )
         exit(1);
+    
     reconnect();
 }
 
@@ -57,16 +72,17 @@ void mqtt_handler::on_success(const mqtt::token& tok)
 // (Re)connection success
 void mqtt_handler::connected(const std::string& cause)
 {
-    // subscribe all topics already known
-    this->_client.subscribe(TOPIC, QOS, nullptr, this->_subListener);
+    for( const auto& [key, value] : this->_subscribed_topics )
+    {
+        // subscribe all topics already known
+        this->_client->subscribe(key, this->_qos, nullptr, this->_subListener);
+    }
 }
 
 // Callback for when the connection is lost.
 // This will initiate the attempt to manually reconnect.
 void mqtt_handler::connection_lost(const std::string& cause)
 {
-    this->_connected = false;
-    
     std::cout << "\nConnection lost" << std::endl;
     if( !cause.empty() )
         std::cout << "\tcause: " << cause << std::endl;
@@ -82,6 +98,13 @@ void mqtt_handler::message_arrived(mqtt::const_message_ptr msg)
     std::cout << "Message arrived" << std::endl;
     std::cout << "\ttopic: '" << msg->get_topic() << "'" << std::endl;
     std::cout << "\tpayload: '" << msg->to_string() << "'\n" << std::endl;
+    
+    // call the corresponding callback
+    auto &cb = this->_subscribed_topics[msg->get_topic()];
+    
+    mqtt_message context(msg->get_topic(), msg->get_payload());
+    
+    cb->call(context);
 }
 
 void mqtt_handler::delivery_complete(mqtt::delivery_token_ptr token) 

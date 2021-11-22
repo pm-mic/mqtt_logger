@@ -60,3 +60,8 @@ void mqtt_database::store_message(mqtt_message &message)
     
     sqlite3_finalize(stmt);
 }
+
+void mqtt_database::call(mqtt_message &message)
+{
+    this->store_message(message);
+}
