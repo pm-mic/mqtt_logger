@@ -8,14 +8,14 @@
     </CustomSourceDirectories>
     <AutoProgramSPIFFSPartition>true</AutoProgramSPIFFSPartition>
     <BuildHost>
-      <HostName>devpi.local</HostName>
+      <HostName>192.168.2.6</HostName>
       <Transport>SSH</Transport>
       <UserName>pi</UserName>
     </BuildHost>
     <MainSourceTransferCommand>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
       <RemoteHost>
-        <HostName>devpi.local</HostName>
+        <HostName>192.168.2.6</HostName>
         <Transport>SSH</Transport>
         <UserName>pi</UserName>
       </RemoteHost>
@@ -37,6 +37,7 @@
       </FileMasks>
       <TransferNewFilesOnly>true</TransferNewFilesOnly>
       <IncludeSubdirectories>true</IncludeSubdirectories>
+      <SelectedDirectories />
       <DeleteDisappearedFiles>true</DeleteDisappearedFiles>
       <ApplyGlobalExclusionList>true</ApplyGlobalExclusionList>
     </MainSourceTransferCommand>
@@ -58,6 +59,7 @@
     <RelativeSourceDirectory />
     <ConfigurationType>DEBUG</ConfigurationType>
     <BinaryDirectory>build/$(PlatformName)/$(ConfigurationName)</BinaryDirectory>
+    <MainCMakeTarget>mqtt_logger</MainCMakeTarget>
     <MakeCommandTemplate>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
       <RemoteHost>
@@ -99,12 +101,14 @@
         <BuildAllTargetsInSubdir>false</BuildAllTargetsInSubdir>
         <FoldSingleItemPathLevels>true</FoldSingleItemPathLevels>
       </ProjectItemSettings>
+      <TargetSpecificSettings />
       <SetLDLibraryPathFromDependentArtifacts>true</SetLDLibraryPathFromDependentArtifacts>
       <ProjectGUID>67edbfba-d65d-455d-b64f-70ebc567a1f3</ProjectGUID>
       <VirtualFolders />
       <ConfigurationNameCase>Upper</ConfigurationNameCase>
       <DefaultHeaderDiscoveryMode>None</DefaultHeaderDiscoveryMode>
       <EnableFastUpToDateCheck>true</EnableFastUpToDateCheck>
+      <StartupTarget>mqtt_logger</StartupTarget>
     </ProjectModeSettings>
   </Build>
   <CustomBuild>
@@ -125,6 +129,7 @@
     <ShowMessageAfterExecuting>true</ShowMessageAfterExecuting>
   </CustomShortcuts>
   <UserDefinedVariables />
+  <ImportedPropertySheets />
   <CodeSense>
     <Enabled>Unknown</Enabled>
     <ExtraSettings>
@@ -137,6 +142,8 @@
       <Enabled>false</Enabled>
     </CodeAnalyzerSettings>
   </CodeSense>
+  <Configurations />
+  <ProgramArgumentsSuggestions />
   <Debug xsi:type="com.visualgdb.debug.remote">
     <AdditionalStartupCommands />
     <AdditionalGDBSettings>

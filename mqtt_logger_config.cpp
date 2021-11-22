@@ -7,25 +7,44 @@ mqtt_logger_config::mqtt_logger_config(std::string filename) :
 {
 }
 
-CONFIG_ERROR mqtt_logger_config::get_broker_ip(char *address)
+std::string mqtt_logger_config::get_broker_ip(void)
 {
     if( !this->_initialized )
     {
-        auto config_load_result = this->_load_config();
-        
-        if( config_load_result != CONFIG_ERROR::NONE )
-        {
-            return config_load_result;
-        }
-        else
-        {
-            
-        }
+        // load file
+        this->_load_config();
     }
+    
+    return this->_broker_ip;
 }
     
-// gets all topics in a vector
-CONFIG_ERROR mqtt_logger_config::get_topics(topics_array *config_toppics)
+topics_array mqtt_logger_config::get_topics(void)
 {
+    if( !this->_initialized )
+    {
+        // load file
+        this->_load_config();
+    }
     
+    return this->_topics;
+}
+
+void mqtt_logger_config::_load_config(void)
+{
+    libconfig::Config cfg;
+    
+    cfg.readFile(this->_filename.c_str());
+    
+    // get ip from file
+    this->_broker_ip = cfg.lookup(this->_broker_ip_label).c_str();
+
+    // get topics from file
+    libconfig::Setting &topics = cfg.lookup(this->_topics_label);
+        
+    for( int i = 0; i < topics.getLength(); i++ )
+    {
+        this->_topics.push_back(topics[i]);
+    }
+    
+    this->_initialized = true;
 }
