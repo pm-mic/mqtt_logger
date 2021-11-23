@@ -9,13 +9,13 @@
 class mqtt_handler_action_listener : public virtual mqtt::iaction_listener
 {
 public:
-    mqtt_handler_action_listener(const std::string &name);
+    mqtt_handler_action_listener(const std::string name);
     
 private:
     void on_failure(const mqtt::token &tok) override;
     void on_success(const mqtt::token &tok) override;
     
-    const std::string &_name;
+    const std::string _name;
 };
 
 

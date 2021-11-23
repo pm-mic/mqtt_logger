@@ -1,7 +1,7 @@
 #include "mqtt_handler_action_listener.h"
 #include <iostream>
 
-mqtt_handler_action_listener::mqtt_handler_action_listener(const std::string &name)
+mqtt_handler_action_listener::mqtt_handler_action_listener(const std::string name)
     : _name(name)
 {
     

@@ -32,8 +32,10 @@ int main(int argc, char *argv[])
     
     // while this program is not finished...
     std::cout << "Logging..." << std::endl;
-    
+
     while( 1 ) ;
+    
+    std::cout << "Quitting..." << std::endl;
     
 	return 0;
 }
