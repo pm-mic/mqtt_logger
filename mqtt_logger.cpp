@@ -6,6 +6,7 @@
 #include "mqtt_logger_config.h"
 #include "mqtt_database.h"
 #include "mqtt_handler.h"
+#include "db_callback.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,7 +18,8 @@ int main(int argc, char *argv[])
     auto id = config.get_id();
     
     // open or create database
-    mqtt_database db = mqtt_database(Constants::database_filename);
+    mqtt_database db(Constants::database_filename);
+    db_callback db_cb(db);
     
     // make mqtt connections
     mqtt_handler handler(broker_ip, id);
@@ -25,7 +27,7 @@ int main(int argc, char *argv[])
     // subscribe to topics
     for( auto const &topic : topics )
     {
-        handler.subscribe(topic, &db);
+        handler.subscribe(topic, &db_cb);
     }
     
     // do logging
