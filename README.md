@@ -1,2 +1,2 @@
 # mqtt_logger
-simple daemon for logging mqtt messages
+Simple daemon program to log MQTT messages to an sqlite3 database.
